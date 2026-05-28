@@ -1,0 +1,61 @@
+def PrecisionRepeatabilityLinearP2():
+  global _hidden_verificationVariable=0
+  step_count_8ac19026_c003_43f2_836a_f1bf7c6e18d9 = 0.0
+  thread Step_Counter_Thread_c70f0d26_efbd_48a9_964e_bd5a6b529448():
+    while (True):
+      step_count_8ac19026_c003_43f2_836a_f1bf7c6e18d9 = step_count_8ac19026_c003_43f2_836a_f1bf7c6e18d9 + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_c70f0d26_efbd_48a9_964e_bd5a6b529448()
+  set_gravity([0.0, 0.0, 9.82])
+  motion_version_set(1)
+  set_safety_mode_transition_hardness(0)
+  tool_wrench_limit_disable()
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  set_tcp(p[0.0,0.0,0.1215,0.0,0.0,0.0])
+  set_target_payload(0.250000, [0.000000, 0.000000, 0.103000], [0.000153, 0.000153, 0.000153, 0.000000, 0.000000, 0.000000])
+  set_tool_communication(False, 115200, 0, 1, 1.5, 3.5)
+  set_tool_output_mode(0)
+  set_tool_digital_output_mode(0, 1)
+  set_tool_digital_output_mode(1, 1)
+  set_tool_voltage(0)
+  global Point_1=p[0.0,0.0,0.0,0.0,0.0,0.0]
+  # begin: URCap Installation Node
+  #   Source: UR Connect, 1.13.111, Universal Robots
+  #   Type: UR Connect
+  myurRPC = rpc_factory("xmlrpc","http://127.0.0.1:40474")
+  # end: URCap Installation Node
+  global Start_p=p[.444804084749, -.542838738634, .130890804648, .000000327067, 3.141592608885, -.000003263529]
+  global Start_q=[-0.6937508609668752, -2.151812273858856, -1.4218820776460834, -1.1386653867015415, 1.557398008552329, 0.8737710425643543]
+  global Destination_p=p[.336070436193, .090954065994, .130890804697, .000000327029, 3.141592604167, -.000003263562]
+  global Destination_q=[0.6573774261641314, -1.3311608357619011, -2.412753801518317, -0.968447402266527, 1.5600868622632307, 2.2233083516471885]
+  while (True):
+    $ 2 "Robot Program"
+    $ 3 "MoveL"
+    $ 4 "Start" "breakAfter"
+    movel(Start_p, a=4.6, v=1.6)
+    $ 5 "Wait: 5.0"
+    sleep(5.0)
+    $ 6 "Loop 50 times"
+    Loop_1 = 0
+    while (Loop_1 < 50):
+      $ 7 "MoveL"
+      $ 8 "Start" "breakAfter"
+      movel(Start_p, a=4.6, v=1.6)
+      $ 9 "Destination" "breakAfter"
+      movel(Destination_p, a=4.6, v=1.6)
+      $ 10 "textmsg('DEST_POSE:',get_actual_tcp_pose())"
+      textmsg("DEST_POSE:",get_actual_tcp_pose())
+      Loop_1 = Loop_1 + 1
+    end
+    $ 11 "Halt"
+    halt
+  end
+end

@@ -1,0 +1,61 @@
+def PrecisionReapeatabilityP2():
+  global _hidden_verificationVariable=0
+  step_count_8ac19026_c003_43f2_836a_f1bf7c6e18d9 = 0.0
+  thread Step_Counter_Thread_c70f0d26_efbd_48a9_964e_bd5a6b529448():
+    while (True):
+      step_count_8ac19026_c003_43f2_836a_f1bf7c6e18d9 = step_count_8ac19026_c003_43f2_836a_f1bf7c6e18d9 + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_c70f0d26_efbd_48a9_964e_bd5a6b529448()
+  set_gravity([0.0, 0.0, 9.82])
+  motion_version_set(1)
+  set_safety_mode_transition_hardness(0)
+  tool_wrench_limit_disable()
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  set_tcp(p[0.0,0.0,0.1215,0.0,0.0,0.0])
+  set_target_payload(0.250000, [0.000000, 0.000000, 0.103000], [0.000153, 0.000153, 0.000153, 0.000000, 0.000000, 0.000000])
+  set_tool_communication(False, 115200, 0, 1, 1.5, 3.5)
+  set_tool_output_mode(0)
+  set_tool_digital_output_mode(0, 1)
+  set_tool_digital_output_mode(1, 1)
+  set_tool_voltage(0)
+  global Point_1=p[0.0,0.0,0.0,0.0,0.0,0.0]
+  # begin: URCap Installation Node
+  #   Source: UR Connect, 1.13.111, Universal Robots
+  #   Type: UR Connect
+  myurRPC = rpc_factory("xmlrpc","http://127.0.0.1:40474")
+  # end: URCap Installation Node
+  global Start_p=p[.005396021267, -.354383948414, 1.079799069801, -.016688233718, 2.213621768826, -2.214139268079]
+  global Start_q=[0.0, -1.5707963267948966, 0.0, -1.5707963267948966, 0.0, 0.0]
+  global Destination_p=p[.336070436193, .090954065994, .130890804697, .000000327029, 3.141592606466, -.000003263562]
+  global Destination_q=[0.6573774242573984, -1.3311608380735347, -2.4127537988232923, -0.9684474062234631, 1.5600868649882802, 2.2233083497839274]
+  while (True):
+    $ 2 "Robot Program"
+    $ 3 "MoveJ"
+    $ 4 "Start" "breakAfter"
+    movej(get_inverse_kin(Start_p, qnear=Start_q), a=9.599310885968812, v=3.141592653589793)
+    $ 5 "Wait: 5.0"
+    sleep(5.0)
+    $ 6 "Loop 50 times"
+    Loop_1 = 0
+    while (Loop_1 < 50):
+      $ 7 "MoveJ"
+      $ 8 "Start" "breakAfter"
+      movej(get_inverse_kin(Start_p, qnear=Start_q), a=9.599310885968812, v=3.141592653589793)
+      $ 9 "Destination" "breakAfter"
+      movej(get_inverse_kin(Destination_p, qnear=Destination_q), a=9.599310885968812, v=3.141592653589793)
+      $ 10 "textmsg('DEST_POSE:',get_actual_tcp_pose())"
+      textmsg("DEST_POSE:",get_actual_tcp_pose())
+      Loop_1 = Loop_1 + 1
+    end
+    $ 11 "Halt"
+    halt
+  end
+end
