@@ -4,3 +4,4 @@ TESTSIM.rdk being the main file where the RoboDK file is with the scirpt used. T
 PythonScriptUR5eDisassembly.py is the python script used in the RoboDK file
 PrecisionRepeatabilityLinearP2.script is the scirpt used for testing the accuracy and repeatability with linear movement
 PrecisionReapeatabilityP2.script is the scirpt used for testing the accuracy and repeatability with joint movement.
+kinematik virker.mw is a maple scirpt to calculate the kinematics
